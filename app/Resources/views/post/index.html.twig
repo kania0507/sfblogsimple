@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+			glowna
+			
+			{% for post in posts %}
+				{{ post.title }}
+				{{ post.content }}
+			{% endfor%}
+			
+        </div>
+    </div>
+{% endblock %}

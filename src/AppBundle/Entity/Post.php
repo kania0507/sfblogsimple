@@ -23,7 +23,7 @@ class Post
 
 	/**
 	* @var
-	* @ORM\OneToMany(targetEntity="comment", mappedBy="post")
+	* @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
 	*/
 	private $comments;
 	
@@ -45,7 +45,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="created", type="string", length=255)
+     * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
