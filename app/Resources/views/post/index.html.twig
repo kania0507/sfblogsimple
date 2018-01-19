@@ -3,11 +3,11 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-			glowna
+			glowna<br />
 			
 			{% for post in posts %}
-				{{ post.title }}
-				{{ post.content }}
+				<h1>{{ post.title }}</h1>
+				<p>{{ post.content }}</p>
 			{% endfor%}
 			
         </div>

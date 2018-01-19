@@ -46,7 +46,7 @@ class DefaultController extends Controller
 	public function showAction($id)
 	{
 		$post = $this->getDoctrine()
-        ->getRepository('Post::class')
+        ->getRepository('AppBundle:Post')
         ->find($id);
 		
 		
