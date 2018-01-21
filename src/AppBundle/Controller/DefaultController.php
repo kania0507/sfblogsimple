@@ -29,7 +29,7 @@ class DefaultController extends Controller
 		
 		
 		$repoPosts = $this->getDoctrine()
-			->getEntityManager()
+			->getManager()
 			->getRepository('AppBundle:Post');
 			$posts = $repoPosts->findAll();
 		
