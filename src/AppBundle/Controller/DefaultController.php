@@ -23,7 +23,7 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
 	 
-    public function indexAction()//Request $request)
+    public function indexAction(Request $request)
     {
 		
 		
@@ -34,8 +34,19 @@ class DefaultController extends Controller
 			$posts = $repoPosts->findAll();
 		
 		
-        return $this->render('post/index.html.twig', array(
-			'posts' => $posts
+		$qb=$this->getDoctrine()
+			->getManager()
+			->createQueryBuilder()
+			->from('AppBundle:Post', 'p')
+			->select('p');
+			
+			$paginator = $this->get('knp_paginator');
+			$pagination = $paginator->paginate(
+			$qb, $request->query->get('page',1), 20);
+			
+		
+        return $this->render('post/index.html.twig', array('posts' => $pagination
+		//	'posts' => $posts
          //   'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ));
     }
