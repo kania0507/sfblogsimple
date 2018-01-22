@@ -9,6 +9,11 @@
     <body>
 	 <div id="container">
 		<div class="row">
+		{% if app.user %}Zalogowany jako {{ app.user }} | 
+			{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('admin') }}">ADMIN</a>{% endif %}
+			<a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+		{% else %}<a href="{{ path('fos_user_security_login') }}">Zaloguj się</a>
+		{% endif %}
         {% block body %}{% endblock %}
         {% block javascripts %}<link rel="javascripts" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js">{% endblock %}
 		</div>

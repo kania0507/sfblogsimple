@@ -2,7 +2,7 @@
 
 {% block body %}
     <div id="wrapper">
-        <div id="container">
+        
 			<h1>{{ post.title }}</h1>
 			<p>{{ post.content }}</p>
 			<span>Dodano: {{ post.created|date('H:i d/m/Y')}}</span>
@@ -15,8 +15,11 @@
 			{% else %}
 			<p>Komentarze tylko dla zalogowanych. <a href="{{ path('fos_user_security_login') }}">Login</a></p>
 			{% endif %}
-			{% for comment in post.comments %}<p>{{ comment.content }}</p>{% endfor %}
-        </div>
+			{% for comment in post.comments %}<p>{{ comment.content }}</p>
+				<span>Dodany: {{post.created|date('H:i d/m/Y')}}</span>
+				{% if comment.user %} przez {{ comment.user }}{% endif %}
+			{% endfor %}
+        
     </div>
 {% endblock %}
 
