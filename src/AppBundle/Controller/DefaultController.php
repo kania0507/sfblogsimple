@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use AppBundle\Form\CommentType;
 
 //use Doctrine\ORM\Mapping as ORM;
 //use Doctrine\ORM\EntityManager;
@@ -55,11 +55,15 @@ class DefaultController extends Controller
 	* @Route("/post/{id}", name="post_show")
 	*/
 	public function showAction($id)
-	{
+	{				
 		$post = $this->getDoctrine()
         ->getRepository('AppBundle:Post')
         ->find($id);
-		
+	
+		$comment=new \AppBundle\Entity\Comment();
+		$comment->setPost($post);
+		$form = $this->createForm(new CommentType());
+	
 		
 		if (!$post) {
 			throw $this->createNotFoundException(
@@ -67,7 +71,7 @@ class DefaultController extends Controller
 			);
 		}
 
-		 return $this->render('post/show.html.twig', array('post'=>$post));
+		 return $this->render('post/show.html.twig', array('post'=>$post, 'form'=>$form->createView()));
 		//return new Response('Post: '.$post->getTitle());
 		// return $this->render('product/show.html.twig', ['product' => $product]);
     

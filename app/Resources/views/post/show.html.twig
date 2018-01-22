@@ -3,10 +3,16 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-		<h1>{{ post.title }}</h1>
-		<p>{{ post.content }}</p>
-		<span>Dodano: {{ post.created|date('H:i d/m/Y')}}</span>
-
+			<h1>{{ post.title }}</h1>
+			<p>{{ post.content }}</p>
+			<span>Dodano: {{ post.created|date('H:i d/m/Y')}}</span>
+			<h2>Komentarze</h2>
+			{{ form_start(form) }}
+				{{ form_widget(form) }}
+				<button>Dodaj</button>
+			{{ form_end(form) }}
+			
+			{% for comment in post.comments %}{{ comment.content }}{% endfor %}
         </div>
     </div>
 {% endblock %}
