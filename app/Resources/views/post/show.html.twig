@@ -12,7 +12,7 @@
 				<button>Dodaj</button>
 			{{ form_end(form) }}
 			
-			{% for comment in post.comments %}{{ comment.content }}{% endfor %}
+			{% for comment in post.comments %}<p>{{ comment.content }}</p>{% endfor %}
         </div>
     </div>
 {% endblock %}

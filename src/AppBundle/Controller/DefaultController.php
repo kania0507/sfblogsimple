@@ -3,7 +3,11 @@
 namespace AppBundle\Controller;
 //namespace AppBundle\Entity;
 ///namespace App\Repository;
-use AppBundle\Entity;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Comment;
+
+
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,17 +58,48 @@ class DefaultController extends Controller
 	/**
 	* @Route("/post/{id}", name="post_show")
 	*/
-	public function showAction($id)
-	{				
-		$post = $this->getDoctrine()
-        ->getRepository('AppBundle:Post')
-        ->find($id);
-	
+	public function showAction(Post $post, Request $request)
+	{	
 		$comment=new \AppBundle\Entity\Comment();
 		$comment->setPost($post);
-		$form = $this->createForm(new CommentType());
+		//$comment->setUser($user);
+	
+		$form = $this->createForm(new CommentType(), $comment);
+		$form->handleRequest($request);
+		
+		if ($form->isValid())
+		{
+			$em=$this->getDoctrine()->getManager();
+			$em->persist($comment);
+			$em->flush();
+			
+			$this->addFlash('success', "Komentarz dodano.");
+			return $this->redirectToRoute('post_show', array('id'=>$post->getId()));
+			
+		}
+
+		
+		
+		
+
+		
+
+/*		
+$post = $this->getDoctrine()
+        ->getRepository('AppBundle:Post')
+        ->find($id);
+		
+		$comment=new \AppBundle\Entity\Comment();
+		$comment->setPost($post);
+		
 	
 		
+		if (!$post) {
+			throw $this->createNotFoundException(
+				'No post found for id '.$id
+			);
+		}
+*/
 		if (!$post) {
 			throw $this->createNotFoundException(
 				'No post found for id '.$id
