@@ -60,24 +60,29 @@ class DefaultController extends Controller
 	*/
 	public function showAction(Post $post, Request $request)
 	{	
-		$comment=new \AppBundle\Entity\Comment();
-		$comment->setPost($post);
-		//$comment->setUser($user);
-	
-		$form = $this->createForm(new CommentType(), $comment);
-		$form->handleRequest($request);
+		$form = null; 
 		
-		if ($form->isValid())
+		if ($user=$this->getUser())
 		{
-			$em=$this->getDoctrine()->getManager();
-			$em->persist($comment);
-			$em->flush();
+	
+			$comment=new \AppBundle\Entity\Comment();
+			$comment->setPost($post);
+			$comment->setUser($user);
+	
+			$form = $this->createForm(new CommentType(), $comment);
+			$form->handleRequest($request);
+		
+			if ($form->isValid())
+			{
+				$em=$this->getDoctrine()->getManager();
+				$em->persist($comment);
+				$em->flush();
 			
-			$this->addFlash('success', "Komentarz dodano.");
-			return $this->redirectToRoute('post_show', array('id'=>$post->getId()));
+				$this->addFlash('success', "Komentarz dodano.");
+				return $this->redirectToRoute('post_show', array('id'=>$post->getId()));
 			
+			}
 		}
-
 		
 		
 		
@@ -106,7 +111,7 @@ $post = $this->getDoctrine()
 			);
 		}
 
-		 return $this->render('post/show.html.twig', array('post'=>$post, 'form'=>$form->createView()));
+		 return $this->render('post/show.html.twig', array('post'=>$post, 'form'=>is_null($form)?$form:$form->createView()));
 		//return new Response('Post: '.$post->getTitle());
 		// return $this->render('product/show.html.twig', ['product' => $product]);
     
