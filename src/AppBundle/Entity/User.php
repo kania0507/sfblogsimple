@@ -1,7 +1,8 @@
 <?php
 
 namespace AppBundle\Entity;
-use FOS\UserBundle\Entity\User as BaseUser;
+//use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class User //extends BaseUser
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -20,7 +21,7 @@ class User //extends BaseUser
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 	
 	/**
 	* @var 
@@ -32,7 +33,7 @@ class User //extends BaseUser
 	 public function __construct()
     {
         parent::__construct();
-        // your own logic
+        
     }
 	
 
