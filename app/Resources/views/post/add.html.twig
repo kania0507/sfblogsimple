@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        
+			
+			<h2>Dodaj post</h2>
+			{% if app.user %}
+				{{ form_start(form) }}
+					{{ form_start(form) }}
+					{{ form_errors(form) }}
+
+					{{ form_row(form.title) }}
+					{# { form_row(form.content) } #}
+					{# { form_row(form.created|date('now')) } #}
+
+					{# { form_row(form.submit, { 'label': 'Submit me' }) } #}
+				
+				{{ form_end(form) }}
+			
+			{% endif %}
+        
+    </div>
+{% endblock %}
+

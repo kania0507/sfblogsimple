@@ -3,10 +3,10 @@
 namespace AppBundle\Controller;
 //namespace AppBundle\Entity;
 ///namespace App\Repository;
-use AppBundle\Entity\Post;
+
 use AppBundle\Entity\User;
 use AppBundle\Entity\Comment;
-
+use AppBundle\Entity\Post;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,6 +14,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\CommentType;
+use AppBundle\Form\PostType;
+//use Symfony\Component\Form\Extension\Core\Type\TextType;
+//use Symfony\Component\Form\Extension\Core\Type\DateType;
+//use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+
+
+
 
 //use Doctrine\ORM\Mapping as ORM;
 //use Doctrine\ORM\EntityManager;
@@ -56,7 +64,7 @@ class DefaultController extends Controller
     }
 	
 	/**
-	* @Route("/post/{id}", name="post_show")
+	* @Route("/posts/{id}", name="post_show")
 	*/
 	public function showAction(Post $post, Request $request)
 	{	
@@ -115,6 +123,50 @@ $post = $this->getDoctrine()
 		//return new Response('Post: '.$post->getTitle());
 		// return $this->render('product/show.html.twig', ['product' => $product]);
     
+	}
+	
+	
+	
+	/**
+	* @Route("/add", name="post_add")	
+	* 
+	*/
+	//@ParamConverter("post", class="AppBundle:Post")
+	public function addAction(Request $request)
+	{	
+		$form=null;
+		//$post='';
+		
+		 // create a task and give it some dummy data for this example
+        $post = new Post();
+        $post->setTitle('Write a blog post');
+        //$task->setDueDate(new \DateTime('tomorrow'));
+
+      
+		if ($user=$this->getUser()){
+			$form = $this->createForm(new PostType(), $post);
+			$form->handleRequest($request);
+			
+			if ($form->isValid())
+			{
+				$post = $form->getData(); 
+				 
+				$em=$this->getDoctrine()->getManager();
+				$em->persist($post);
+				$em->flush();
+			
+				$this->addFlash('success', "Post dodano.");
+				return $this->redirectToRoute('homepage');//, array('id'=>$post->getId()));
+			
+			}
+		}
+        return $this->render('post/add.html.twig', array(        
+			'form'=>is_null($form)?$form:$form->createView()
+        ));
+		
+
+        
+	
 	}
 	
 }

@@ -139,6 +139,7 @@ class Post
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->created = new \DateTime("now");
     }
 
     /**
