@@ -7,7 +7,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
-
+use AppBundle\Entity\Category;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -69,10 +69,13 @@ class DefaultController extends Controller
 	public function showAction(Post $post, Request $request)
 	{	
 		$form = null; 
+		$categories=null;
 		
 		if ($user=$this->getUser())
 		{
 	
+			$categories=new \AppBundle\Entity\Category();
+			
 			$comment=new \AppBundle\Entity\Comment();
 			$comment->setPost($post);
 			$comment->setUser($user);
@@ -119,7 +122,9 @@ $post = $this->getDoctrine()
 			);
 		}
 
-		 return $this->render('post/show.html.twig', array('post'=>$post, 'form'=>is_null($form)?$form:$form->createView()));
+		 return $this->render('post/show.html.twig', array('post'=>$post, 
+			'categories'=>$categories,
+			'form'=>is_null($form)?$form:$form->createView()));
 		//return new Response('Post: '.$post->getTitle());
 		// return $this->render('product/show.html.twig', ['product' => $product]);
     

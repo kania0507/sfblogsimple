@@ -5,7 +5,11 @@
         
 			<h1>{{ post.title }}</h1>
 			<p>{{ post.content }}</p>
+			<p>Kategorie<br />
+			{% for category in post.categories %}<span>{{ category.name }}</span>{% endfor %}
+			</p>
 			<span>Dodano: {{ post.created|date('H:i d/m/Y')}}</span>
+			
 			<h2>Komentarze</h2>
 			{% if app.user %}
 				{{ form_start(form) }}
