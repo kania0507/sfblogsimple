@@ -38,7 +38,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 		
-		
+		$categories=new \AppBundle\Entity\Category();
 		
 		$repoPosts = $this->getDoctrine()
 			->getManager()
@@ -57,7 +57,8 @@ class DefaultController extends Controller
 			$qb, $request->query->get('page',1), 20);
 			
 		
-        return $this->render('post/index.html.twig', array('posts' => $pagination
+        return $this->render('post/index.html.twig', array('posts' => $pagination,
+		'categories'=>$categories
 		//	'posts' => $posts
          //   'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ));
