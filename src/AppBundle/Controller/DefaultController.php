@@ -159,7 +159,8 @@ $post = $this->getDoctrine()
 				return $this->redirectToRoute('homepage');//, array('id'=>$post->getId()));
 			
 			}
-		}
+		} else echo "Musisz być zalogowany, aby dodać nowy post.";
+		
         return $this->render('post/add.html.twig', array(        
 			'form'=>is_null($form)?$form:$form->createView()
         ));
