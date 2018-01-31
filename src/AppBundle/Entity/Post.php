@@ -29,9 +29,10 @@ class Post
 	
 	/**
 	* @var
-	* @ORM\OneToMany(targetEntity="Category", mappedBy="post")
+	* @ORM\ManyToOne(targetEntity="Category", inversedBy="post")
+	* @ORM\JoinColumn(name="category_id", referencedColumnName="id")
 	*/
-	private $categories;
+	protected $categories;
 	
     /**
      * @var string
@@ -146,6 +147,8 @@ class Post
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->created = new \DateTime("now");
+		
+		
     }
 
     /**
@@ -212,5 +215,18 @@ class Post
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function setCategories(\AppBundle\Entity\Category $categories = null)
+    {
+        $this->categories = $categories;
+
+        return $this;
     }
 }

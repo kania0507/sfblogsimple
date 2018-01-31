@@ -9,7 +9,8 @@
 				<div class="col-md-4 col-sm-12">
 					<h1><a href="{{ path('post_show', {id: post.id}) }}">{{ post.title }}</a></h1>
 					<p>{{ post.content }}</p>
-					{% for category in post.categories %}<span>{{ category.name }}</span> {% endfor %}
+					
+					<p>Kategorie: {% for category in post.categories %}<span>{{ category.name }}</span> {% endfor %}</p>
 				</div>
 			{% endfor%}
 			{{ knp_pagination_render(posts) }}

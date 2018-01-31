@@ -29,7 +29,8 @@ class Post
 	
 	/**
 	* @var
-	* @ORM\OneToMany(targetEntity="Category", mappedBy="post")
+	* @ORM\ManyToOne(targetEntity="Category", inversedBy="post")
+	* @ORM\JoinColumn(name="category_id", referencedColumnName="id")
 	*/
 	private $categories;
 	
@@ -179,5 +180,51 @@ class Post
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function addCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     */
+    public function removeCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Set categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function setCategories(\AppBundle\Entity\Category $categories = null)
+    {
+        $this->categories = $categories;
+
+        return $this;
     }
 }

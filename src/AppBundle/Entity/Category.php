@@ -29,10 +29,14 @@ class Category
     private $name;
 
 	/**
-	* @ORM\ManyToOne(targetEntity="Post", inversedBy="Category")
+	* @ORM\OneToMany(targetEntity="Post", mappedBy="Category")	
 	*/
-	private $post;
+	
+	protected $post;
 
+	
+	
+	 
     /**
      * Get id
      *
@@ -87,5 +91,36 @@ class Category
     public function getPost()
     {
         return $this->post;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->post = new \Doctrine\Common\Collections\ArrayCollection();
+				
+    }
+
+    /**
+     * Add post
+     *
+     * @param \AppBundle\Entity\Post $post
+     * @return Category
+     */
+    public function addPost(\AppBundle\Entity\Post $post)
+    {
+        $this->post[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->post->removeElement($post);
     }
 }

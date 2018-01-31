@@ -29,8 +29,9 @@ class Category
     private $name;
 
 	/**
-	* @ORM\ManyToOne(targetEntity="Post", inversedBy="Category")
+	* @ORM\OneToMany(targetEntity="Post", mappedBy="Category")	
 	*/
+	
 	private $post;
 
     /**
@@ -64,5 +65,28 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set post
+     *
+     * @param \AppBundle\Entity\Post $post
+     * @return Category
+     */
+    public function setPost(\AppBundle\Entity\Post $post = null)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * Get post
+     *
+     * @return \AppBundle\Entity\Post 
+     */
+    public function getPost()
+    {
+        return $this->post;
     }
 }

@@ -38,13 +38,32 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 		
-		$categories=new \AppBundle\Entity\Category();
+		$categories=array();//new \AppBundle\Entity\Category();
+		
 		
 		$repoPosts = $this->getDoctrine()
 			->getManager()
 			->getRepository('AppBundle:Post');
 			$posts = $repoPosts->findAll();
+
+		//	print_r($posts);
+			//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
 		
+			
+			/*
+			$qb = $this->createQueryBuilder('a');
+$qb->add('select', 'a');
+$qb->leftJoin('a.category', 'c');
+$qb->where('c.name LIKE :category'); 
+$qb->setParameter('category', $slug);
+$qb->getQuery()->getResult();
+*/
+
+			//foreach ($posts->getCategories() as $categories) {
+			//	echo $categories->getName(); }
+				
+			//foreach ($posts as $post)
+			//	$categories[$post->getId()] = $post->getCategories();
 		
 		$qb=$this->getDoctrine()
 			->getManager()
@@ -57,6 +76,22 @@ class DefaultController extends Controller
 			$qb, $request->query->get('page',1), 20);
 			
 		
+		/*
+		
+		public function findWithoutArticle($article_id)
+{
+    $qb = $this->em->createQueryBuilder()
+                   ->select('c')
+                   ->from('Category', 'c')
+                   ->leftJoin('c.article', 'a')
+                   ->where('a.article_id <> :articleId')
+                   ->setParameter('articleId', $article_id);
+
+    return $qb->getQuery()->getResult();
+}
+		*/
+		
+		//print_r($categories);
         return $this->render('post/index.html.twig', array('posts' => $pagination,
 		'categories'=>$categories
 		//	'posts' => $posts
@@ -64,18 +99,42 @@ class DefaultController extends Controller
         ));
     }
 	
+	
+	public function findOneByIdJoinedToCategory($postId)
+{
+    return $this->createQueryBuilder('p')
+        // p.category refers to the "category" property on product
+        ->innerJoin('p.category_id', 'c')
+        // selects all the category data to avoid the query
+        ->addSelect('c')
+        ->andWhere('p.id = :id')
+        ->setParameter('id', $postId)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
+
+	
 	/**
 	* @Route("/posts/{id}", name="post_show")
 	*/
 	public function showAction(Post $post, Request $request)
 	{	
 		$form = null; 
-		$categories=null;
+		
+		
+		$categories = $post->getCategories()->getName();
 		
 		if ($user=$this->getUser())
 		{
 	
-			$categories=new \AppBundle\Entity\Category();
+			//$categories=new \AppBundle\Entity\Category();
+			//foreach ($post->getCategories() as $cat) {
+//				$categories=$cat->getName();				
+			//}
+			$categories = $post->getCategory()->getName();
+			
+			
+			$categories->getPost($post);
 			
 			$comment=new \AppBundle\Entity\Comment();
 			$comment->setPost($post);
@@ -174,6 +233,14 @@ $post = $this->getDoctrine()
 
         
 	
+	}
+	public function findAllCatNameAsc()
+	{
+		return $this->getEntityManager()
+          ->createQuery(
+            'SELECT c FROM AppBundle::Category c ORDER BY c.name ASC'
+          )
+          ->getResult();
 	}
 	
 }

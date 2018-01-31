@@ -6,6 +6,7 @@
 			<h1>{{ post.title }}</h1>
 			<p>{{ post.content }}</p>
 			<h3>Kategorie</h3>
+			{{ categories}}
 			{% for category in post.categories %}<span>{{ category.name }}</span> {% endfor %}
 			</p>
 			<span>Dodano: {{ post.created|date('H:i d/m/Y')}}</span>
