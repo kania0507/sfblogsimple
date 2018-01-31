@@ -44,6 +44,17 @@ class CategoryController extends Controller
 		$repository = $this->getDoctrine()->getRepository(Category::class);
 		$category = $repository->find($id);
 	
+	
+	$qb = $this->createQueryBuilder('a');
+$qb->from('AppBundle:Category');
+	$qb->add('select', 'a');
+$qb->leftJoin('a.category', 'c');
+$qb->where('c.name LIKE :category'); /* i have guessed a.name */
+$qb->setParameter('category', $slug);
+$qb->getQuery()->getResult();
+
+var_dump($qb);
+
 			
 		if (!$category) {
 			throw $this->createNotFoundException(
