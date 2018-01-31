@@ -44,10 +44,11 @@ class DefaultController extends Controller
 		$repoPosts = $this->getDoctrine()
 			->getManager()
 			->getRepository('AppBundle:Post');
-			$posts = $repoPosts->findAll();
-
-		//	print_r($posts);
-			//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
+			$posts = $repoPosts->findAll([], ['title' => 'DESC']);
+			
+		$categories= $posts[14]->getCategories();
+			
+		//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
 		
 			
 			/*
@@ -76,26 +77,24 @@ $qb->getQuery()->getResult();
 			$qb, $request->query->get('page',1), 20);
 			
 		
-		/*
-		
+		/*		
 		public function findWithoutArticle($article_id)
-{
-    $qb = $this->em->createQueryBuilder()
+		{
+			$qb = $this->em->createQueryBuilder()
                    ->select('c')
                    ->from('Category', 'c')
                    ->leftJoin('c.article', 'a')
                    ->where('a.article_id <> :articleId')
                    ->setParameter('articleId', $article_id);
 
-    return $qb->getQuery()->getResult();
-}
+			return $qb->getQuery()->getResult();
+		}
 		*/
 		
-		//print_r($categories);
+		
         return $this->render('post/index.html.twig', array('posts' => $pagination,
-		'categories'=>$categories
-		//	'posts' => $posts
-         //   'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+			'categories'=>$categories		
+			//   'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ));
     }
 	
@@ -120,9 +119,10 @@ $qb->getQuery()->getResult();
 	public function showAction(Post $post, Request $request)
 	{	
 		$form = null; 
+		$categories = null;
 		
-		
-		$categories = $post->getCategories()->getName();
+		if ($post->getCategories())
+			$categories = $post->getCategories()->getName();
 		
 		if ($user=$this->getUser())
 		{

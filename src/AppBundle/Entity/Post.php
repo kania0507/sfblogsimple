@@ -147,7 +147,7 @@ class Post
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->created = new \DateTime("now");
-		
+		$this->categories = new \Doctrine\Common\Collections\ArrayCollection();
 		
     }
 

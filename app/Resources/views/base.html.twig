@@ -5,12 +5,12 @@
         <title>{% block title %}Welcome to my blog!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
 		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		
+		<link rel="stylesheet" href="{{ asset('bundles/App/css/style.css') }}"  />
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-	 <div id="container-fluid">		
-		<div class="row">
+	 <div class="container-fluid">		
+		<div class="row header">
 		
 		<nav class="navbar navbar-default">
   <div class="container">
@@ -68,7 +68,7 @@
 
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" id="main">
 				{% block body %}{% endblock %}
 			</div>
         {% block javascripts %}{% endblock %}
