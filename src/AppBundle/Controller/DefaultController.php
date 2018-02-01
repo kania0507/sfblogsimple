@@ -126,15 +126,10 @@ $qb->getQuery()->getResult();
 		
 		if ($user=$this->getUser())
 		{
-	
-			//$categories=new \AppBundle\Entity\Category();
-			//foreach ($post->getCategories() as $cat) {
-//				$categories=$cat->getName();				
-			//}
+
 			$categories = $post->getCategory()->getName();
 			
-			
-			$categories->getPost($post);
+					
 			
 			$comment=new \AppBundle\Entity\Comment();
 			$comment->setPost($post);
@@ -155,27 +150,7 @@ $qb->getQuery()->getResult();
 			}
 		}
 		
-		
-		
-
-		
-
-/*		
-$post = $this->getDoctrine()
-        ->getRepository('AppBundle:Post')
-        ->find($id);
-		
-		$comment=new \AppBundle\Entity\Comment();
-		$comment->setPost($post);
-		
 	
-		
-		if (!$post) {
-			throw $this->createNotFoundException(
-				'No post found for id '.$id
-			);
-		}
-*/
 		if (!$post) {
 			throw $this->createNotFoundException(
 				'No post found for id '.$id
@@ -200,9 +175,8 @@ $post = $this->getDoctrine()
 	public function addAction(Request $request)
 	{	
 		$form=null;
-		//$post='';
 		
-		 // create a task and give it some dummy data for this example
+				 
         $post = new Post();
         $post->setTitle('Write a blog post');
         //$task->setDueDate(new \DateTime('tomorrow'));

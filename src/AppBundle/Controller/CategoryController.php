@@ -41,19 +41,26 @@ class CategoryController extends Controller
 	*/
 	public function showAction($id)
 	{				
+	
+		$posts = new \AppBundle\Entity\Post;
+	
 		$repository = $this->getDoctrine()->getRepository(Category::class);
 		$category = $repository->find($id);
-	
-	
+		
+		$posts = $category->getPosts();
+		
+		
+		
+		/*
 	$qb = $this->createQueryBuilder('a');
-$qb->from('AppBundle:Category');
+	$qb->from('AppBundle:Category');
 	$qb->add('select', 'a');
-$qb->leftJoin('a.category', 'c');
-$qb->where('c.name LIKE :category'); /* i have guessed a.name */
-$qb->setParameter('category', $slug);
-$qb->getQuery()->getResult();
+	$qb->leftJoin('a.category', 'c');
+	$qb->where('c.name LIKE :category'); 
+	$qb->setParameter('category', $slug);
+	$qb->getQuery()->getResult();
+	*/
 
-var_dump($qb);
 
 			
 		if (!$category) {
@@ -62,6 +69,6 @@ var_dump($qb);
 			);
 		}
 
-		 return $this->render('category/show.html.twig', array('category'=>$category));		    
+		 return $this->render('category/show.html.twig', array('category'=>$category, 'posts'=>$posts));		    
 	}	
 }

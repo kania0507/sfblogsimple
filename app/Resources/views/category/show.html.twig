@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %}Blog - {{ category.name }}{% endblock %}
 {% block body %}
-    <div id="wrapper">
-        
-			
+    <div id="wrapper">        			
 					<h1>{{ category.name }}</h1>
-					{# show posts from category #}
+					
+					
+						{% for post in posts  %}
+							<h3>{{ post.title }}</h3>
+							{{ post.content }}
+						{% endfor %}
+					
 		
     </div>
 {% endblock %}

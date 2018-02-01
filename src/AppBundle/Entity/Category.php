@@ -29,10 +29,10 @@ class Category
     private $name;
 
 	/**
-	* @ORM\OneToMany(targetEntity="Post", mappedBy="Category")	
+	* @ORM\OneToMany(targetEntity="Post", mappedBy="category")	
 	*/
 	
-	protected $post;
+	protected $posts;
 
 	
 	
@@ -122,5 +122,15 @@ class Category
     public function removePost(\AppBundle\Entity\Post $post)
     {
         $this->post->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

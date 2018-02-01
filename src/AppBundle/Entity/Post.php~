@@ -29,10 +29,10 @@ class Post
 	
 	/**
 	* @var
-	* @ORM\ManyToOne(targetEntity="Category", inversedBy="post")
+	* @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
 	* @ORM\JoinColumn(name="category_id", referencedColumnName="id")
 	*/
-	private $categories;
+	protected $category;
 	
     /**
      * @var string
@@ -147,6 +147,8 @@ class Post
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->created = new \DateTime("now");
+		$this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+		
     }
 
     /**
