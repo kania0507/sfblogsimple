@@ -41,11 +41,13 @@ class CategoryController extends Controller
 	*/
 	public function showAction($id)
 	{				
+	      
 	
 		$posts = new \AppBundle\Entity\Post;
 	
 		$repository = $this->getDoctrine()->getRepository(Category::class);
 		$category = $repository->find($id);
+		//$category = $repository->findOneBySlug($slug);
 		
 		$posts = $category->getPosts();
 		
@@ -68,7 +70,11 @@ class CategoryController extends Controller
 				'No category found for id '.$id
 			);
 		}
-
+  /* return array(
+            'pagination' => $pagination,
+            'title' => sprintf('Wpisy w kategorii "%s"', $category->getName())
+        );
+	*/	
 		 return $this->render('category/show.html.twig', array('category'=>$category, 'posts'=>$posts));		    
 	}	
 }

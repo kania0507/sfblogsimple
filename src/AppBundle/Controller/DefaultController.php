@@ -46,7 +46,7 @@ class DefaultController extends Controller
 			->getRepository('AppBundle:Post');
 			$posts = $repoPosts->findAll([], ['title' => 'DESC']);
 			
-		$categories= $posts[14]->getCategories();
+		///$categories= $posts[14]->getCategories();
 			
 		//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
 		
@@ -183,6 +183,20 @@ $qb->getQuery()->getResult();
 
       
 		if ($user=$this->getUser()){
+			
+			$repo = $this->getDoctrine()
+			->getManager()
+			->getRepository('AppBundle:Category');
+			
+			$query = $repo->createQueryBuilder('c')	
+			//$repo->createQuery('c')					
+				->select('c.name, c.id')
+				->getQuery();
+				//->getScalarResult();
+				//$c = array_column($query, "id");
+				
+			$c = $query->getResult();	
+		
 			$form = $this->createForm(new PostType(), $post);
 			$form->handleRequest($request);
 			
@@ -200,8 +214,27 @@ $qb->getQuery()->getResult();
 			}
 		} else echo "Musisz być zalogowany, aby dodać nowy post.";
 		
+		/*
+		$repoCategories = $this->getDoctrine()
+			->getManager()
+			->getRepository('AppBundle:Category');
+			$categories = $repoCategories->findAll();
+			
+		$qb=$this->getDoctrine()
+			->getManager()
+			->createQueryBuilder()
+			->from('AppBundle:Category', 'p')
+			->select('p');
+		*/	
+			
+			
+			
+		 //$c = $post->getCategories() ;
+		
+		
         return $this->render('post/add.html.twig', array(        
-			'form'=>is_null($form)?$form:$form->createView()
+			'form'=>is_null($form)?$form:$form->createView(),
+			'c'=>$c
         ));
 		
 
@@ -210,7 +243,7 @@ $qb->getQuery()->getResult();
 	}
 	public function findAllCatNameAsc()
 	{
-		return $this->getEntityManager()
+		return $this->getDoctrine()->getEntityManager()
           ->createQuery(
             'SELECT c FROM AppBundle::Category c ORDER BY c.name ASC'
           )

@@ -14,11 +14,20 @@
 					{# { form_row(form.content) } #}
 					{# { form_row(form.created|date('now')) } #}
 
+			<b>Category</b>	<br />	
+			<select class="form-control" id="categories">
+			{% for cat in c %}
+				<option value="{{ cat.id }}">{{ cat.name}}</option>							
+			{% endfor %}
+			</select>
+			
 					{# { form_row(form.submit, { 'label': 'Submit me' }) } #}
 				
 				{{ form_end(form) }}
 			
 			{% endif %}
+			
+			
         
     </div>
 {% endblock %}

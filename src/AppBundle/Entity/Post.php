@@ -30,7 +30,8 @@ class Post
 	/**
 	* @var
 	* @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
-	* @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+	* @ORM\JoinColumn(name="category_id", referencedColumnName="id",
+	* onDelete = "SET NULL")
 	*/
 	protected $category;
 	
