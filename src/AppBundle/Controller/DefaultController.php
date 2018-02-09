@@ -241,6 +241,85 @@ $qb->getQuery()->getResult();
         
 	
 	}
+	
+	/**
+     * @Route("/search", name="search_post"
+	 * )
+     */
+	 
+    public function searchAction( Request $request)
+    { // $page,
+		
+		
+		$searchParam = '%'.$request->query->get('search').'%';
+		$r= $request->query->get('search');
+		$categories=array();//new \AppBundle\Entity\Category();
+		
+		/* //////////////////////////////////
+		$repoPosts = $this->getDoctrine()
+			->getManager()
+			->getRepository('AppBundle:Post');
+		$posts = $repoPosts->findAll([], ['title' => 'DESC']);
+		*/	///////////////////////////////
+		///$categories= $posts[14]->getCategories();
+			
+		//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
+		
+			
+			/*
+			$qb = $this->createQueryBuilder('a');
+$qb->add('select', 'a');
+$qb->leftJoin('a.category', 'c');
+$qb->where('c.name LIKE :category'); 
+$qb->setParameter('category', $slug);
+$qb->getQuery()->getResult();
+*/
+
+			//foreach ($posts->getCategories() as $categories) {
+			//	echo $categories->getName(); }
+				
+			//foreach ($posts as $post)
+			//	$categories[$post->getId()] = $post->getCategories();
+		
+		$qb=$this->getDoctrine()
+			->getManager()
+			->createQueryBuilder()
+			->select('p')
+			->from('AppBundle:Post', 'p')			
+			->where('p.title LIKE :searchParam OR p.content LIKE :searchParam')
+			->setParameter('searchParam', $searchParam);
+			
+			$paginator = $this->get('knp_paginator');
+			$pagination = $paginator->paginate(
+				$qb, 
+				//$this->get('form.type.search')->query->get('page', 1),
+				$request->query->get('page',1), 
+				20);
+			
+		
+		/*		
+		public function findWithoutArticle($article_id)
+		{
+			$qb = $this->em->createQueryBuilder()
+                   ->select('c')
+                   ->from('Category', 'c')
+                   ->leftJoin('c.article', 'a')
+                   ->where('a.article_id <> :articleId')
+                   ->setParameter('articleId', $article_id);
+
+			return $qb->getQuery()->getResult();
+		}
+		*/
+		
+		
+        return $this->render('post/search.html.twig', array('posts' => $pagination,
+			'searchParam' => $searchParam,
+			'categories'=>$categories	, 'r'=>$r	
+			//   'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        ));
+    }
+	
+	
 	public function findAllCatNameAsc()
 	{
 		return $this->getDoctrine()->getEntityManager()
