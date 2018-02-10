@@ -100,3 +100,14 @@ knp_paginator:
         pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template                                    
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template                                
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+        
+easy_admin:
+    entities:
+        - AppBundle\Entity\Post
+        - AppBundle\Entity\Category
+        - AppBundle\Entity\User
+        - AppBundle\Entity\Comment
+    list:
+        actions:
+            - { name: 'show', icon: 'search', label: '' }
+            - { name: 'edit', icon: 'pencil', label: '' }

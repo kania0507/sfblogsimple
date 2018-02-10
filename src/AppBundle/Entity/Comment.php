@@ -40,6 +40,11 @@ class Comment
      * @ORM\Column(name="content", type="string", length=255)
      */
     private $content;
+	
+	public function __toString()
+	{
+		return $this->title;
+	}
 
 	public function __construct()
 	{
