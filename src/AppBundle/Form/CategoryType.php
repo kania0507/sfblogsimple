@@ -2,15 +2,11 @@
 
 namespace AppBundle\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-//use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
-class PostType extends AbstractType
+class CategoryType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,10 +15,7 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('content')
-			->add('category')
-            //->add('created')
+            ->add('name')            
 			->add('save', 'submit')
         ;
     }
@@ -33,7 +26,7 @@ class PostType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Post'
+            'data_class' => 'AppBundle\Entity\Category'
         ));
     }
 
@@ -42,6 +35,6 @@ class PostType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_post';
+        return 'appbundle_category';
     }
 }

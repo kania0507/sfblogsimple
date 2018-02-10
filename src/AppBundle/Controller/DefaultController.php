@@ -115,6 +115,7 @@ $qb->getQuery()->getResult();
 	
 	/**
 	* @Route("/posts/{id}", name="post_show")
+	*      requirements = {"id" = "\d+"}
 	*/
 	public function showAction(Post $post, Request $request)
 	{	
@@ -168,10 +169,9 @@ $qb->getQuery()->getResult();
 	
 	
 	/**
-	* @Route("/add", name="post_add")	
+	* @Route("/post/add/", name="post_add")	
 	* 
 	*/
-	//@ParamConverter("post", class="AppBundle:Post")
 	public function addAction(Request $request)
 	{	
 		$form=null;

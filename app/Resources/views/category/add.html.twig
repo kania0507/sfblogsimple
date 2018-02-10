@@ -1,18 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block title %} "Adding post..." {% endblock %}
+{% block title %} "Adding new category..." {% endblock %}
 {% block body %}
     <div id="wrapper">
         
 			
-			<h2>Dodaj post</h2>
+			<h2>Dodaj kategorię</h2>
 			{% if app.user %}
 				{{ form_start(form) }}
 					{{ form_start(form) }}
 					{{ form_errors(form) }}
 
-					{{ form_row(form.title) }}
-					{# { form_row(form.content) } #}
-					{# { form_row(form.created|date('now')) } #}
+					{{ form_row(form.name) }}
+										
 
 			
 			

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-
+use AppBundle\Form\CategoryType;
 use AppBundle\Entity\Category;
 
 class CategoryController extends Controller
@@ -38,6 +38,7 @@ class CategoryController extends Controller
 	
 	/**
 	* @Route("/categories/{id}", name="category_show")
+	*      requirements = {"id" = "\d+"}
 	*/
 	public function showAction($id)
 	{				
@@ -76,5 +77,51 @@ class CategoryController extends Controller
         );
 	*/	
 		 return $this->render('category/show.html.twig', array('category'=>$category, 'posts'=>$posts));		    
-	}	
+	}
+
+	
+		
+	/**
+	* @Route("/category/add/", name="category_add")	
+	* 
+	*/
+	public function addAction(Request $request)
+	{	
+		$form=null;
+						 
+        $category = new Category();
+                      
+		if ($user=$this->getUser()){					
+		
+			$form = $this->createForm(new CategoryType(), $category);
+			$form->handleRequest($request);
+			
+			if ($form->isValid())
+			{
+				$category = $form->getData(); 
+				 
+				$em=$this->getDoctrine()->getManager();
+				$em->persist($category);
+				$em->flush();
+			
+				$this->addFlash('success', "Kategorię dodano.");
+				return $this->redirectToRoute('homepage');
+			
+			}
+		} else echo "Musisz być zalogowany, aby dodać nową kategorię.";
+		
+		
+		
+		
+        return $this->render('category/add.html.twig', array(        
+			'form'=>is_null($form)?$form:$form->createView(),
+			
+        ));
+		
+
+        
+	
+	}
+
+	
 }

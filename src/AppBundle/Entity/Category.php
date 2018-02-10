@@ -34,7 +34,10 @@ class Category
 	
 	protected $posts;
 
-	
+	public function __toString()
+	{
+		return $this->name;
+	}
 	
 	 
     /**
