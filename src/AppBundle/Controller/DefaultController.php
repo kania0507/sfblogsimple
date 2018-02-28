@@ -127,9 +127,9 @@ $qb->getQuery()->getResult();
 		
 		if ($user=$this->getUser())
 		{
-
-			$categories = $post->getCategory()->getName();
-			
+			if ($post->getCategory()!=null)
+				$categories = $post->getCategory()->getName();
+			//else echo "Brak";
 					
 			
 			$comment=new \AppBundle\Entity\Comment();
@@ -175,6 +175,7 @@ $qb->getQuery()->getResult();
 	public function addAction(Request $request)
 	{	
 		$form=null;
+		$c=null;
 		
 				 
         $post = new Post();
@@ -319,7 +320,7 @@ $qb->getQuery()->getResult();
         ));
     }
 	
-	
+	/*
 	public function findAllCatNameAsc()
 	{
 		return $this->getDoctrine()->getEntityManager()
@@ -328,5 +329,6 @@ $qb->getQuery()->getResult();
           )
           ->getResult();
 	}
+	*/
 	
 }
