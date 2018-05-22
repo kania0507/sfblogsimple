@@ -30,6 +30,13 @@ class User extends BaseUser
 	private $comments;
 
 	
+	/**
+	* @var array
+	* 
+	* @ORM\Column(type="json_array")
+	*/
+	//protected $roles = [];
+	
 	 public function __construct()
     {
         parent::__construct();
@@ -46,6 +53,17 @@ class User extends BaseUser
     {
         return $this->id;
     }
+	
+	/**
+	*
+	* @return array (Role|string)[]
+	*/
+	/*
+	public function getRoles($roles)
+	{
+		return $this->roles;
+	}
+	*/
 
     /**
      * Add comments
@@ -79,4 +97,11 @@ class User extends BaseUser
     {
         return $this->comments;
     }
+	
+	 public function getUserRoles(User $user)
+    {
+        return $user->getRoles();
+    }
+	
+	
 }

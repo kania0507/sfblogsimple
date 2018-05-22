@@ -121,12 +121,14 @@ $qb->getQuery()->getResult();
 	{	
 		$form = null; 
 		$categories = null;
+		///$usRole = null;
 		
 		if ($post->getCategories())
 			$categories = $post->getCategories()->getName();
 		
 		if ($user=$this->getUser())
 		{
+			///$usRole = $user->getUserRoles($user);
 			if ($post->getCategory()!=null)
 				$categories = $post->getCategory()->getName();
 			//else echo "Brak";
@@ -160,6 +162,7 @@ $qb->getQuery()->getResult();
 
 		 return $this->render('post/show.html.twig', array('post'=>$post, 
 			'categories'=>$categories,
+			'role'=>$usRole,
 			'form'=>is_null($form)?$form:$form->createView()));
 		//return new Response('Post: '.$post->getTitle());
 		// return $this->render('product/show.html.twig', ['product' => $product]);
