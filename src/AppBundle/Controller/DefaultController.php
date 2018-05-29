@@ -121,18 +121,17 @@ $qb->getQuery()->getResult();
 	{	
 		$form = null; 
 		$categories = null;
-		///$usRole = null;
+		$usRole = null;
 		
 		if ($post->getCategories())
 			$categories = $post->getCategories()->getName();
 		
 		if ($user=$this->getUser())
 		{
-			///$usRole = $user->getUserRoles($user);
+			//$usRole = $user->getUserRoles($user);
 			if ($post->getCategory()!=null)
 				$categories = $post->getCategory()->getName();
-			//else echo "Brak";
-					
+								
 			
 			$comment=new \AppBundle\Entity\Comment();
 			$comment->setPost($post);
@@ -162,10 +161,9 @@ $qb->getQuery()->getResult();
 
 		 return $this->render('post/show.html.twig', array('post'=>$post, 
 			'categories'=>$categories,
-			'role'=>$usRole,
+			'usRole'=>$usRole[0],
 			'form'=>is_null($form)?$form:$form->createView()));
-		//return new Response('Post: '.$post->getTitle());
-		// return $this->render('product/show.html.twig', ['product' => $product]);
+		
     
 	}
 	
@@ -192,12 +190,10 @@ $qb->getQuery()->getResult();
 			->getManager()
 			->getRepository('AppBundle:Category');
 			
-			$query = $repo->createQueryBuilder('c')	
-			//$repo->createQuery('c')					
+			$query = $repo->createQueryBuilder('c')			
 				->select('c.name, c.id')
 				->getQuery();
-				//->getScalarResult();
-				//$c = array_column($query, "id");
+		
 				
 			$c = $query->getResult();	
 		
@@ -217,23 +213,7 @@ $qb->getQuery()->getResult();
 			
 			}
 		} else echo "Musisz być zalogowany, aby dodać nowy post.";
-		
-		/*
-		$repoCategories = $this->getDoctrine()
-			->getManager()
-			->getRepository('AppBundle:Category');
-			$categories = $repoCategories->findAll();
-			
-		$qb=$this->getDoctrine()
-			->getManager()
-			->createQueryBuilder()
-			->from('AppBundle:Category', 'p')
-			->select('p');
-		*/	
-			
-			
-			
-		 //$c = $post->getCategories() ;
+				
 		
 		
         return $this->render('post/add.html.twig', array(        
@@ -257,33 +237,9 @@ $qb->getQuery()->getResult();
 		
 		$searchParam = '%'.$request->query->get('search').'%';
 		$r= $request->query->get('search');
-		$categories=array();//new \AppBundle\Entity\Category();
+		$categories=array();
 		
-		/* //////////////////////////////////
-		$repoPosts = $this->getDoctrine()
-			->getManager()
-			->getRepository('AppBundle:Post');
-		$posts = $repoPosts->findAll([], ['title' => 'DESC']);
-		*/	///////////////////////////////
-		///$categories= $posts[14]->getCategories();
-			
-		//$posts=$repoPosts->findOneByIdJoinedToCategory($posts->getId());
 		
-			
-			/*
-			$qb = $this->createQueryBuilder('a');
-$qb->add('select', 'a');
-$qb->leftJoin('a.category', 'c');
-$qb->where('c.name LIKE :category'); 
-$qb->setParameter('category', $slug);
-$qb->getQuery()->getResult();
-*/
-
-			//foreach ($posts->getCategories() as $categories) {
-			//	echo $categories->getName(); }
-				
-			//foreach ($posts as $post)
-			//	$categories[$post->getId()] = $post->getCategories();
 		
 		$qb=$this->getDoctrine()
 			->getManager()
@@ -301,19 +257,6 @@ $qb->getQuery()->getResult();
 				20);
 			
 		
-		/*		
-		public function findWithoutArticle($article_id)
-		{
-			$qb = $this->em->createQueryBuilder()
-                   ->select('c')
-                   ->from('Category', 'c')
-                   ->leftJoin('c.article', 'a')
-                   ->where('a.article_id <> :articleId')
-                   ->setParameter('articleId', $article_id);
-
-			return $qb->getQuery()->getResult();
-		}
-		*/
 		
 		
         return $this->render('post/search.html.twig', array('posts' => $pagination,

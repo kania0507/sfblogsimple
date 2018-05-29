@@ -48,34 +48,15 @@ class CategoryController extends Controller
 	
 		$repository = $this->getDoctrine()->getRepository(Category::class);
 		$category = $repository->find($id);
-		//$category = $repository->findOneBySlug($slug);
-		
+				
 		$posts = $category->getPosts();
-		
-		
-		
-		/*
-	$qb = $this->createQueryBuilder('a');
-	$qb->from('AppBundle:Category');
-	$qb->add('select', 'a');
-	$qb->leftJoin('a.category', 'c');
-	$qb->where('c.name LIKE :category'); 
-	$qb->setParameter('category', $slug);
-	$qb->getQuery()->getResult();
-	*/
-
-
 			
 		if (!$category) {
 			throw $this->createNotFoundException(
 				'No category found for id '.$id
 			);
 		}
-  /* return array(
-            'pagination' => $pagination,
-            'title' => sprintf('Wpisy w kategorii "%s"', $category->getName())
-        );
-	*/	
+  
 		 return $this->render('category/show.html.twig', array('category'=>$category, 'posts'=>$posts));		    
 	}
 
