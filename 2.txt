@@ -1,6 +1,0 @@
-Rozw problemu:
-1) nowy plik routing.yml - bez ACME DEMO BUNDLE
-2) BD - utworzyc czysta BD "symfony" bez tabel, przynzanie uprawnien dla uzytkownika symfony; >php app/console doctrine:schema:update --force (tworzy tabele na podstawie Entities)
-3) problem z zalogowaniem 
-- Utworzenie uzytkownika: > php app/console fos:user:create ania ania@wp.pl haslo
-- "Authentication request could not be processed due to a system problem." (ROLE serialzacja)
